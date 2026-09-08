@@ -15,8 +15,8 @@ title: "Sitara | Micro Processors and DSPs"
         content="Open source engineering talks, blogs and technical videos from the Sitara Software Community."
     >
 
-    <link rel="stylesheet" href="assets/css/style.css?v=20260907_1">
-    <link rel="stylesheet" href="assets/css/app-notes.css?v=20260907_1">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v=20260907_1">
+    <link rel="stylesheet" href="{{ '/assets/css/app-notes.css' | relative_url }}?v=20260907_1">
 </head>
 
 <body>
@@ -40,9 +40,9 @@ title: "Sitara | Micro Processors and DSPs"
         </button>
 
         <!-- TI Brand -->
-        <a class="ti-brand-wrap" href="index.html" title="Texas Instruments - Sitara">
+        <a class="ti-brand-wrap" href="{{ '/' | relative_url }}" title="Texas Instruments - Sitara">
           <img
-            src="assets/images/ic-logo.svg"
+            src="{{ '/assets/images/ic-logo.svg' | relative_url }}"
             alt="Texas Instruments"
             class="ti-logo-img"
           >
@@ -83,31 +83,31 @@ title: "Sitara | Micro Processors and DSPs"
 
         <nav class="ti-nav-links" id="tiNavLinks">
           <div class="ti-nav-item">
-            <a href="index.html" class="ti-nav-link active">
+            <a href="{{ '/' | relative_url }}" class="ti-nav-link active">
               Home
             </a>
           </div>
 
           <div class="ti-nav-item">
-            <a href="blog/" class="ti-nav-link">
+            <a href="{{ '/blog/' | relative_url }}" class="ti-nav-link">
               Blogs
             </a>
           </div>
 
           <div class="ti-nav-item">
-            <a href="talks/" class="ti-nav-link">
+            <a href="{{ '/talks/' | relative_url }}" class="ti-nav-link">
               Talks
             </a>
           </div>
 
           <div class="ti-nav-item">
-            <a href="videos/" class="ti-nav-link">
+            <a href="{{ '/videos/' | relative_url }}" class="ti-nav-link">
               Videos
             </a>
           </div>
 
           <div class="ti-nav-item">
-            <a href="app-notes/" class="ti-nav-link">
+            <a href="{{ '/app-notes/' | relative_url }}" class="ti-nav-link">
               App Notes
             </a>
           </div>
@@ -159,25 +159,25 @@ title: "Sitara | Micro Processors and DSPs"
 
       <div class="section-head">
         <h2>Featured Blog</h2>
-        <a href="blog/">All blogs &rarr;</a>
+        <a href="{{ '/blog/' | relative_url }}">All blogs &rarr;</a>
       </div>
 
       <div class="featured-blog-card">
         <div class="featured-blog-media">
           <span class="featured-badge">Featured Article</span>
-          <img src="{{ featured.image | default: 'assets/images/featured-default.png' }}" alt="{{ featured.title }}" class="featured-blog-img">
+          <img src="{% if featured.image contains '://' %}{{ featured.image }}{% else %}{{ featured.image | default: '/assets/images/featured-default.png' | relative_url }}{% endif %}" alt="{{ featured.title }}" class="featured-blog-img">
         </div>
         <div class="featured-blog-content">
           <div class="featured-categories">
-            {% for cat in featured.categories %}<a href="blog/?tag={{ cat | url_encode }}" class="category-tag">{{ cat | upcase }}</a>{% endfor %}
+            {% for cat in featured.categories %}<a href="{{ '/blog/' | relative_url }}?tag={{ cat | url_encode }}" class="category-tag">{{ cat | upcase }}</a>{% endfor %}
           </div>
           <h3 class="featured-blog-title" style="margin: 0 0 14px;">
-            <a href="{{ featured.url }}">{{ featured.title }}</a>
+            <a href="{{ featured.url | relative_url }}">{{ featured.title }}</a>
           </h3>
           <p class="featured-blog-desc">{{ featured.description }}</p>
           {% if featured.tags and featured.tags.size > 0 %}
           <div class="blog-card-tags">
-            {% for tag in featured.tags %}<a href="blog/?tag={{ tag | url_encode }}" class="blog-tag">{{ tag }}</a>{% endfor %}
+            {% for tag in featured.tags %}<a href="{{ '/blog/' | relative_url }}?tag={{ tag | url_encode }}" class="blog-tag">{{ tag }}</a>{% endfor %}
           </div>
           {% endif %}
           <div class="featured-blog-meta">
@@ -190,7 +190,7 @@ title: "Sitara | Micro Processors and DSPs"
               {{ featured.date | date: "%B %d, %Y" }}
             </span>
           </div>
-          <a href="{{ featured.url }}" class="featured-blog-btn">
+          <a href="{{ featured.url | relative_url }}" class="featured-blog-btn">
             <span>Read full article</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
@@ -207,28 +207,28 @@ title: "Sitara | Micro Processors and DSPs"
     <section class="section">
       <div class="section-head">
         <h2>Latest Blogs</h2>
-        <a href="blog/">View all &rarr;</a>
+        <a href="{{ '/blog/' | relative_url }}">View all &rarr;</a>
       </div>
       <div class="blog-grid">
         {% assign latest_posts = site.posts | where_exp: "post", "post.url != featured.url" %}
         {% for post in latest_posts limit:3 %}
         <article class="blog-card">
           <div class="blog-card-media">
-            <a href="{{ post.url }}" tabindex="-1" aria-hidden="true">
-              <img src="{{ post.image | default: '/assets/images/blog-default.jpeg' | relative_url }}" alt="{{ post.title }}" class="blog-card-img" loading="lazy">
+            <a href="{{ post.url | relative_url }}" tabindex="-1" aria-hidden="true">
+              <img src="{% if post.image contains '://' %}{{ post.image }}{% else %}{{ post.image | default: '/assets/images/blog-default.jpeg' | relative_url }}{% endif %}" alt="{{ post.title }}" class="blog-card-img" loading="lazy">
             </a>
           </div>
           <div class="blog-card-body">
             <p class="blog-card-kicker">
               {% for cat in post.categories %}
-                <a href="blog/?tag={{ cat | url_encode }}" class="blog-kicker-tag">{{ cat }}</a>{% unless forloop.last %} &middot; {% endunless %}
+                <a href="{{ '/blog/' | relative_url }}?tag={{ cat | url_encode }}" class="blog-kicker-tag">{{ cat }}</a>{% unless forloop.last %} &middot; {% endunless %}
               {% endfor %}
             </p>
-            <h3 class="blog-card-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+            <h3 class="blog-card-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
             <p class="blog-card-desc">{{ post.description }}</p>
             {% if post.tags and post.tags.size > 0 %}
             <div class="blog-card-tags">
-              {% for tag in post.tags %}<a href="blog/?tag={{ tag | url_encode }}" class="blog-tag">{{ tag }}</a>{% endfor %}
+              {% for tag in post.tags %}<a href="{{ '/blog/' | relative_url }}?tag={{ tag | url_encode }}" class="blog-tag">{{ tag }}</a>{% endfor %}
             </div>
             {% endif %}
             <div class="blog-card-meta">
@@ -236,7 +236,7 @@ title: "Sitara | Micro Processors and DSPs"
               <span>{{ post.date | date: "%b %d, %Y" }}</span>
             </div>
             <div class="blog-card-footer">
-              <a href="{{ post.url }}" class="blog-read-btn">
+              <a href="{{ post.url | relative_url }}" class="blog-read-btn">
                 <span>Read article</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </a>
@@ -254,21 +254,21 @@ title: "Sitara | Micro Processors and DSPs"
     <section class="section">
       <div class="section-head">
         <h2>Conference Talks</h2>
-        <a href="talks/">All talks &rarr;</a>
+        <a href="{{ '/talks/' | relative_url }}">All talks &rarr;</a>
       </div>
       <div class="talk-grid" style="padding-top: 0; padding-bottom: 20px;">
         {% for talk in site.talks limit:3 %}
         <article class="talk-card">
           <div class="blog-card-media">
-            <a href="{{ talk.url }}" tabindex="-1" aria-hidden="true">
-              <img src="{% if talk.image contains '://' %}{{ talk.image }}{% else %}{{ talk.image | default: 'assets/images/blog-default.jpeg' }}{% endif %}" alt="{{ talk.title }}" class="blog-card-img" loading="lazy">
+            <a href="{{ talk.url | relative_url }}" tabindex="-1" aria-hidden="true">
+              <img src="{% if talk.image contains '://' %}{{ talk.image }}{% else %}{{ talk.image | default: '/assets/images/blog-default.jpeg' | relative_url }}{% endif %}" alt="{{ talk.title }}" class="blog-card-img" loading="lazy">
             </a>
           </div>
           <div class="blog-card-body">
             <p class="blog-card-kicker">
-              <a href="talks/?tag={{ talk.category | url_encode }}" class="blog-kicker-tag">{{ talk.category }}</a> &middot; {{ talk.conference }}
+              <a href="{{ '/talks/' | relative_url }}?tag={{ talk.category | url_encode }}" class="blog-kicker-tag">{{ talk.category }}</a> &middot; {{ talk.conference }}
             </p>
-            <h3 class="blog-card-title"><a href="{{ talk.url }}">{{ talk.title }}</a></h3>
+            <h3 class="blog-card-title"><a href="{{ talk.url | relative_url }}">{{ talk.title }}</a></h3>
             <p class="blog-card-desc">{{ talk.description }}</p>
             <div class="blog-card-meta">
               <span>{{ talk.speaker | default: "Sitara Team" }}</span>
@@ -287,7 +287,7 @@ title: "Sitara | Micro Processors and DSPs"
                 <span>YouTube</span>
               </a>
               {% endif %}
-              <a href="{{ talk.url }}" class="blog-read-btn" style="margin-left: auto;">
+              <a href="{{ talk.url | relative_url }}" class="blog-read-btn" style="margin-left: auto;">
                 <span>Details</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </a>
@@ -305,21 +305,21 @@ title: "Sitara | Micro Processors and DSPs"
     <section class="section">
       <div class="section-head">
         <h2>Technical Videos</h2>
-        <a href="videos/">All videos &rarr;</a>
+        <a href="{{ '/videos/' | relative_url }}">All videos &rarr;</a>
       </div>
       <div class="video-grid" style="padding-top: 0; padding-bottom: 20px;">
         {% for video in site.videos limit:3 %}
         <article class="video-card">
           <div class="video-thumb-wrap">
-            <a href="{{ video.url }}" style="display:contents;">
-              <img src="{% if video.image contains '://' %}{{ video.image }}{% else %}{{ video.image | default: '/assets/images/blog-default.jpeg' | relative_url }}{% endif %}" alt="{{ video.title }}" class="video-thumb-img" loading="lazy">
+            <a href="{{ video.url | relative_url }}" style="display:contents;">
+              <img src="{% if video.image contains '://' %}{{ video.image }}{% else %}{{ video.image | default: video.thumbnail | default: '/assets/images/blog-default.jpeg' | relative_url }}{% endif %}" alt="{{ video.title }}" class="video-thumb-img" loading="lazy">
             </a>
           </div>
           <div class="blog-card-body">
             <p class="blog-card-kicker">
-              <a href="videos/?tag={{ video.category | url_encode }}" class="blog-kicker-tag">{{ video.category }}</a>
+              <a href="{{ '/videos/' | relative_url }}?tag={{ video.category | url_encode }}" class="blog-kicker-tag">{{ video.category }}</a>
             </p>
-            <h3 class="blog-card-title"><a href="{{ video.url }}">{{ video.title }}</a></h3>
+            <h3 class="blog-card-title"><a href="{{ video.url | relative_url }}">{{ video.title }}</a></h3>
             <p class="blog-card-desc">{{ video.description }}</p>
             <div class="blog-card-meta">
               <span>{{ video.speaker | default: "Sitara Team" }}</span>
@@ -337,7 +337,7 @@ title: "Sitara | Micro Processors and DSPs"
                 <span>{{ video.source | default: "TI.com" }} ↗</span>
               </a>
               {% endif %}
-              <a href="{{ video.url }}" class="blog-read-btn" style="margin-left: auto;">
+              <a href="{{ video.url | relative_url }}" class="blog-read-btn" style="margin-left: auto;">
                 <span>Watch on site</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </a>
@@ -355,7 +355,7 @@ title: "Sitara | Micro Processors and DSPs"
 
       <div class="section-head">
         <h2>App Notes</h2>
-        <a href="app-notes/">
+        <a href="{{ '/app-notes/' | relative_url }}">
           All app notes &rarr;
         </a>
       </div>
@@ -364,8 +364,8 @@ title: "Sitara | Micro Processors and DSPs"
 
         <article class="app-note-card" style="border: 1px solid var(--ti-border-card); border-radius: 6px; padding: 24px; background: #fff; display: flex; flex-direction: column;">
           <div class="app-note-meta" style="margin-bottom: 12px; display: flex; gap: 8px;">
-            <a href="app-notes/?tag=AM62x" class="app-note-tag app-note-family">AM62x</a>
-            <a href="app-notes/?tag=Power" class="app-note-tag app-note-category">Power</a>
+            <a href="{{ '/app-notes/' | relative_url }}?tag=AM62x" class="app-note-tag app-note-family">AM62x</a>
+            <a href="{{ '/app-notes/' | relative_url }}?tag=Power" class="app-note-tag app-note-category">Power</a>
           </div>
           <h3 style="font-size: 18px; line-height: 1.35; margin: 0 0 10px; font-weight: 700;">
             <a href="https://www.ti.com/lit/an/sprad35/sprad35.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--ti-black); text-decoration: none;">
@@ -385,8 +385,8 @@ title: "Sitara | Micro Processors and DSPs"
 
         <article class="app-note-card" style="border: 1px solid var(--ti-border-card); border-radius: 6px; padding: 24px; background: #fff; display: flex; flex-direction: column;">
           <div class="app-note-meta" style="margin-bottom: 12px; display: flex; gap: 8px;">
-            <a href="app-notes/?tag=AM64x" class="app-note-tag app-note-family">AM64x</a>
-            <a href="app-notes/?tag=Industrial" class="app-note-tag app-note-category">Industrial</a>
+            <a href="{{ '/app-notes/' | relative_url }}?tag=AM64x" class="app-note-tag app-note-family">AM64x</a>
+            <a href="{{ '/app-notes/' | relative_url }}?tag=Industrial" class="app-note-tag app-note-category">Industrial</a>
           </div>
           <h3 style="font-size: 18px; line-height: 1.35; margin: 0 0 10px; font-weight: 700;">
             <a href="https://www.ti.com/lit/an/sprad21/sprad21.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--ti-black); text-decoration: none;">
@@ -406,8 +406,8 @@ title: "Sitara | Micro Processors and DSPs"
 
         <article class="app-note-card" style="border: 1px solid var(--ti-border-card); border-radius: 6px; padding: 24px; background: #fff; display: flex; flex-direction: column;">
           <div class="app-note-meta" style="margin-bottom: 12px; display: flex; gap: 8px;">
-            <a href="app-notes/?tag=AM62P" class="app-note-tag app-note-family">AM62P</a>
-            <a href="app-notes/?tag=Hardware" class="app-note-tag app-note-category">Hardware</a>
+            <a href="{{ '/app-notes/' | relative_url }}?tag=AM62P" class="app-note-tag app-note-family">AM62P</a>
+            <a href="{{ '/app-notes/' | relative_url }}?tag=Hardware" class="app-note-tag app-note-category">Hardware</a>
           </div>
           <h3 style="font-size: 18px; line-height: 1.35; margin: 0 0 10px; font-weight: 700;">
             <a href="https://www.ti.com/lit/an/sprad88/sprad88.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--ti-black); text-decoration: none;">
@@ -652,7 +652,7 @@ title: "Sitara | Micro Processors and DSPs"
         <div class="ti-footer-brand-section">
           <a href="https://www.ti.com/" class="ti-footer-logo-link" target="_blank" rel="noopener noreferrer">
             <img
-              src="assets/images/ti-logo-white.svg"
+              src="{{ '/assets/images/ti-logo-white.svg' | relative_url }}"
               alt="Texas Instruments"
               class="ti-footer-logo-img"
             >
@@ -688,7 +688,7 @@ title: "Sitara | Micro Processors and DSPs"
   <nav class="ti-mobile-drawer" id="tiMobileDrawer" aria-label="Mobile navigation">
     <div class="ti-drawer-header">
       <span class="ti-drawer-title">
-        <img src="assets/images/ic-logo.svg" alt="Texas Instruments" class="ti-drawer-logo-img">
+        <img src="{{ '/assets/images/ic-logo.svg' | relative_url }}" alt="Texas Instruments" class="ti-drawer-logo-img">
       </span>
       <button class="ti-drawer-close" id="tiDrawerClose" aria-label="Close menu">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -721,23 +721,23 @@ title: "Sitara | Micro Processors and DSPs"
       <div class="ti-drawer-divider"></div>
 
       <ul class="ti-drawer-links">
-        <li><a class="ti-drawer-link active" href="index.html">
+        <li><a class="ti-drawer-link active" href="{{ '/' | relative_url }}">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           Home
         </a></li>
-        <li><a class="ti-drawer-link" href="blog/">
+        <li><a class="ti-drawer-link" href="{{ '/blog/' | relative_url }}">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
           Blogs
         </a></li>
-        <li><a class="ti-drawer-link" href="talks/">
+        <li><a class="ti-drawer-link" href="{{ '/talks/' | relative_url }}">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
           Talks
         </a></li>
-        <li><a class="ti-drawer-link" href="videos/">
+        <li><a class="ti-drawer-link" href="{{ '/videos/' | relative_url }}">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           Videos
         </a></li>
-        <li><a class="ti-drawer-link" href="app-notes/">
+        <li><a class="ti-drawer-link" href="{{ '/app-notes/' | relative_url }}">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
           App Notes
         </a></li>
@@ -753,12 +753,13 @@ title: "Sitara | Micro Processors and DSPs"
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           TI E2E Forums
         </a></li>
+      </ul>
     </div>
   </nav>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/search.js"></script>
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
 
 </body>
 </html>

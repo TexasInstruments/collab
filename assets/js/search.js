@@ -23,6 +23,9 @@
     if (path.indexOf('/collab') === 0) {
       return '/collab/search.json';
     }
+    if (path.indexOf('/sitara-open-source-talks') === 0) {
+      return '/sitara-open-source-talks/search.json';
+    }
     return '/search.json';
   }
 
