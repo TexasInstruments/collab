@@ -1,0 +1,281 @@
+---
+layout: default
+title: Blogs
+---
+
+<!-- =========================================================
+     PAGE HERO SECTION (FULL WIDTH)
+     ========================================================= -->
+<section class="ti-hero-banner">
+  <div class="ti-hero-inner">
+    <div class="ti-hero-content">
+      <div class="ti-hero-kicker">
+        <span>Engineering Insights</span>
+      </div>
+      <h1 class="ti-hero-title">
+        Ideas worth sharing
+      </h1>
+      <p class="ti-hero-sub">
+        Practical lessons, architecture deep dives, and production-tested patterns from embedded Linux, power optimization, security HSMs, DSP, and Zephyr RTOS on Sitara MPUs.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="ti-container">
+
+  <!-- =========================================================
+       BLOG FILTERS BAR
+       ========================================================= -->
+  <div class="blog-filters-bar">
+    <button class="blog-filter-btn active" data-filter="all">All Articles</button>
+    <button class="blog-filter-btn" data-filter="Linux">Linux</button>
+    <button class="blog-filter-btn" data-filter="Zephyr">Zephyr</button>
+    <button class="blog-filter-btn" data-filter="DSP">DSP</button>
+    <button class="blog-filter-btn" data-filter="Security">Security</button>
+    <button class="blog-filter-btn" data-filter="RPMsg">RPMsg</button>
+    <button class="blog-filter-btn" data-filter="U-Boot">U-Boot</button>
+  </div>
+
+  <!-- =========================================================
+       FEATURED BLOG ARTICLE
+       ========================================================= -->
+  {% assign featured_post = site.posts.first %}
+  {% if featured_post %}
+  <section class="featured-blog-section">
+    <div class="featured-blog-card" data-categories="{{ featured_post.categories | join: ',' }}" data-tags="{{ featured_post.tags | join: ',' }}" data-title="{{ featured_post.title }}">
+      
+      <div class="featured-blog-media">
+        <span class="featured-badge">Featured Article</span>
+        <img
+          src="{{ featured_post.image | default: '/assets/images/featured-default.png' | relative_url }}"
+          alt="{{ featured_post.title }}"
+          class="featured-blog-img"
+        >
+      </div>
+
+      <div class="featured-blog-content">
+        <div class="featured-categories">
+          {% for cat in featured_post.categories %}
+            <span class="category-tag" data-tag="{{ cat }}" title="Filter by {{ cat }}">{{ cat }}</span>
+          {% endfor %}
+        </div>
+
+        <h2 class="featured-blog-title">
+          <a href="{{ featured_post.url | relative_url }}">
+            {{ featured_post.title }}
+          </a>
+        </h2>
+
+        <p class="featured-blog-desc">
+          {{ featured_post.description }}
+        </p>
+
+        {% if featured_post.tags and featured_post.tags.size > 0 %}
+        <div class="blog-card-tags">
+          {% for tag in featured_post.tags %}
+            <span class="blog-tag" data-tag="{{ tag }}" title="Filter by {{ tag }}">{{ tag }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="featured-blog-meta">
+          <span class="featured-meta-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <strong>{{ featured_post.author | default: "Sitara MPU Team" }}</strong>
+          </span>
+
+          <span class="featured-meta-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            {{ featured_post.date | date: "%B %d, %Y" }}
+          </span>
+        </div>
+
+        <a href="{{ featured_post.url | relative_url }}" class="featured-blog-btn">
+          <span>Read full article</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- =========================================================
+       ALL BLOG POSTS GRID
+       ========================================================= -->
+  <section class="blog-grid-section">
+    <div class="blog-section-header">
+      <h2 class="blog-section-title">
+        <span>All Articles &amp; Technical Notes</span>
+        <span class="blog-count-badge">{{ site.posts | size }} articles</span>
+      </h2>
+    </div>
+
+    <div class="blog-grid">
+      {% for post in site.posts %}
+      <article class="blog-card" data-categories="{{ post.categories | join: ',' }}" data-tags="{{ post.tags | join: ',' }}" data-title="{{ post.title }}">
+        
+        <div class="blog-card-media">
+          <a href="{{ post.url | relative_url }}" tabindex="-1" aria-hidden="true">
+            <img
+              src="{{ post.image | default: '/assets/images/blog-default.jpeg' | relative_url }}"
+              alt="{{ post.title }}"
+              class="blog-card-img"
+              loading="lazy"
+            >
+          </a>
+        </div>
+
+        <div class="blog-card-body">
+          <p class="blog-card-kicker">
+            {% for cat in post.categories %}
+              <span class="blog-kicker-tag" data-tag="{{ cat }}" title="Filter by {{ cat }}">{{ cat }}</span>{% unless forloop.last %} &middot; {% endunless %}
+            {% endfor %}
+          </p>
+
+          <h3 class="blog-card-title">
+            <a href="{{ post.url | relative_url }}">
+              {{ post.title }}
+            </a>
+          </h3>
+
+          <p class="blog-card-desc">
+            {{ post.description }}
+          </p>
+
+          {% if post.tags and post.tags.size > 0 %}
+          <div class="blog-card-tags">
+            {% for tag in post.tags %}
+              <span class="blog-tag" data-tag="{{ tag }}" title="Filter by {{ tag }}">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="blog-card-meta">
+            <span>{{ post.author | default: "Sitara Team" }}</span>
+            <span>{{ post.date | date: "%b %d, %Y" }}</span>
+          </div>
+
+          <div class="blog-card-footer">
+            <a href="{{ post.url | relative_url }}" class="blog-read-btn">
+              <span>Read article</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function() {
+  function applyBlogFilter(tagVal, updateUrl) {
+    var raw = tagVal ? tagVal.trim() : "all";
+    var normalized = raw.toLowerCase();
+    var count = 0;
+
+    if (updateUrl !== false && window.history && window.history.replaceState) {
+      var newUrl = normalized === "all" ? window.location.pathname : window.location.pathname + "?tag=" + encodeURIComponent(raw);
+      window.history.replaceState(null, "", newUrl);
+    }
+
+    // Update top filter buttons
+    document.querySelectorAll(".blog-filter-btn").forEach(function(btn) {
+      var bFilter = (btn.getAttribute("data-filter") || "").toLowerCase().trim();
+      if (bFilter === normalized) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+
+    // Filter featured card if present
+    var featuredCard = document.querySelector(".featured-blog-section");
+    if (featuredCard) {
+      if (normalized === "all") {
+        featuredCard.style.display = "";
+      } else {
+        var featEl = featuredCard.querySelector(".featured-blog-card");
+        var featCats = (featEl ? featEl.getAttribute("data-categories") : "").toLowerCase();
+        var featTags = (featEl ? featEl.getAttribute("data-tags") : "").toLowerCase();
+        var featTitle = (featEl ? featEl.getAttribute("data-title") : "").toLowerCase();
+        var matchFeat = featCats.indexOf(normalized) !== -1 || featTags.indexOf(normalized) !== -1 || featTitle.indexOf(normalized) !== -1;
+        featuredCard.style.display = matchFeat ? "" : "none";
+      }
+    }
+
+    // Filter regular cards
+    document.querySelectorAll(".blog-grid .blog-card").forEach(function(card) {
+      var cats = (card.getAttribute("data-categories") || "").toLowerCase();
+      var tags = (card.getAttribute("data-tags") || "").toLowerCase();
+      var title = (card.getAttribute("data-title") || "").toLowerCase();
+      var show = normalized === "all" || cats.indexOf(normalized) !== -1 || tags.indexOf(normalized) !== -1 || title.indexOf(normalized) !== -1;
+      card.style.display = show ? "" : "none";
+      if (show) count++;
+    });
+
+    // Update count badge
+    var badge = document.querySelector(".blog-count-badge");
+    if (badge) {
+      if (normalized === "all") {
+        badge.innerHTML = count + " articles";
+      } else {
+        badge.innerHTML = 'Showing <strong>' + count + '</strong> for tag <strong>"' + raw + '"</strong> &nbsp;&middot;&nbsp; <button id="clearBlogFilter" style="background:none; border:none; color:var(--ti-red, #CC0000); font-weight:700; cursor:pointer; text-decoration:underline; font-size:12px; padding:0;">Clear filter &times;</button>';
+        var clearBtn = document.getElementById("clearBlogFilter");
+        if (clearBtn) {
+          clearBtn.addEventListener("click", function() {
+            applyBlogFilter("all");
+          });
+        }
+      }
+    }
+  }
+
+  // Top filter buttons
+  document.querySelectorAll(".blog-filter-btn").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      applyBlogFilter(btn.getAttribute("data-filter"));
+    });
+  });
+
+  // Clickable tags (tag pills, category tags, kicker tags)
+  document.querySelectorAll(".blog-tag, .category-tag, .blog-kicker-tag").forEach(function(el) {
+    el.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var tag = el.getAttribute("data-tag") || el.textContent.trim();
+      applyBlogFilter(tag);
+      var gridSec = document.querySelector(".blog-grid-section");
+      if (gridSec) {
+        gridSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Check URL parameters on load
+  var urlParams = new URLSearchParams(window.location.search);
+  var initialTag = urlParams.get("tag");
+  if (initialTag) {
+    applyBlogFilter(initialTag, false);
+  }
+})();
+</script>

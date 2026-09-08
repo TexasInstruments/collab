@@ -1,0 +1,190 @@
+---
+layout: default
+title: Videos
+---
+
+<!-- =========================================================
+     PAGE HERO SECTION (FULL WIDTH)
+     ========================================================= -->
+<section class="ti-hero-banner">
+  <div class="ti-hero-inner">
+    <div class="ti-hero-content">
+      <div class="ti-hero-kicker">
+        <span>Recorded Sessions</span>
+      </div>
+      <h1 class="ti-hero-title">
+        Watch the engineering
+      </h1>
+      <p class="ti-hero-sub">
+        Technical video recordings, live demonstrations, and in-depth architecture walk-throughs from the Texas Instruments Sitara MPU software engineering community.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="ti-container">
+
+  <!-- =========================================================
+       VIDEOS FILTERS BAR
+       ========================================================= -->
+  <div class="blog-filters-bar">
+    <button class="blog-filter-btn active" data-filter="all">All Videos</button>
+    <button class="blog-filter-btn" data-filter="Automotive">Automotive</button>
+    <button class="blog-filter-btn" data-filter="Edge AI">Edge AI</button>
+    <button class="blog-filter-btn" data-filter="Industrial">Industrial</button>
+    <button class="blog-filter-btn" data-filter="Linux">Linux</button>
+    <button class="blog-filter-btn" data-filter="Networking">Networking</button>
+  </div>
+
+  <section class="blog-grid-section">
+    <div class="blog-section-header">
+      <h2 class="blog-section-title">
+        <span>Video Library</span>
+        <span class="blog-count-badge">{{ site.videos | size }} recordings</span>
+      </h2>
+    </div>
+
+    <div class="video-grid">
+      {% for video in site.videos %}
+      <article class="video-card" data-category="{{ video.category }}" data-title="{{ video.title }}" data-speaker="{{ video.speaker }}">
+        
+        <div class="video-thumb-wrap">
+          <a href="{{ video.url | relative_url }}" tabindex="-1" aria-hidden="true" style="display:contents;">
+            <img
+              src="{% if video.image contains '://' %}{{ video.image }}{% else %}{{ video.image | default: video.thumbnail | default: '/assets/images/blog-default.jpeg' | relative_url }}{% endif %}"
+              alt="{{ video.title }}"
+              class="video-thumb-img"
+              loading="lazy"
+            >
+          </a>
+        </div>
+
+        <div class="blog-card-body">
+          <p class="blog-card-kicker">
+            <span class="blog-kicker-tag" data-tag="{{ video.category }}" title="Filter by {{ video.category }}">{{ video.category }}</span>
+          </p>
+
+          <h3 class="blog-card-title">
+            <a href="{{ video.url | relative_url }}">
+              {{ video.title }}
+            </a>
+          </h3>
+
+          <p class="blog-card-desc">
+            {{ video.description }}
+          </p>
+
+          <div class="blog-card-meta">
+            <span>{{ video.speaker }}</span>
+            <span>{{ video.year }}</span>
+          </div>
+
+          <div class="card-action-bar">
+            {% if video.youtube %}
+            <a href="{{ video.youtube }}" target="_blank" rel="noopener noreferrer" class="yt-btn" title="Watch on YouTube">
+              <svg width="18" height="13" viewBox="0 0 28 20" fill="none" aria-hidden="true"><rect width="28" height="20" rx="6" fill="#FFFFFF"/><polygon points="11,5.5 19,10 11,14.5" fill="#FF0000"/></svg>
+              <span>YouTube</span>
+            </a>
+            {% elsif video.external_url %}
+            <a href="{{ video.external_url }}" target="_blank" rel="noopener noreferrer" class="card-btn-outline" title="Watch on {{ video.source | default: 'TI.com' }}">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              <span>{{ video.source | default: "TI.com" }} ↗</span>
+            </a>
+            {% endif %}
+
+            <a href="{{ video.url | relative_url }}" class="blog-read-btn" style="margin-left: auto;">
+              <span>Watch on site</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function() {
+  function applyVideosFilter(tagVal, updateUrl) {
+    var raw = tagVal ? tagVal.trim() : "all";
+    var normalized = raw.toLowerCase();
+    var count = 0;
+
+    if (updateUrl !== false && window.history && window.history.replaceState) {
+      var newUrl = normalized === "all" ? window.location.pathname : window.location.pathname + "?tag=" + encodeURIComponent(raw);
+      window.history.replaceState(null, "", newUrl);
+    }
+
+    // Update top filter buttons
+    document.querySelectorAll(".blog-filter-btn").forEach(function(btn) {
+      var bFilter = (btn.getAttribute("data-filter") || "").toLowerCase().trim();
+      if (bFilter === normalized) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+
+    // Filter cards
+    document.querySelectorAll(".video-grid .video-card").forEach(function(card) {
+      var cat = (card.getAttribute("data-category") || "").toLowerCase();
+      var title = (card.getAttribute("data-title") || "").toLowerCase();
+      var speaker = (card.getAttribute("data-speaker") || "").toLowerCase();
+      var show = normalized === "all" || cat.indexOf(normalized) !== -1 || title.indexOf(normalized) !== -1 || speaker.indexOf(normalized) !== -1;
+      card.style.display = show ? "" : "none";
+      if (show) count++;
+    });
+
+    // Update count badge
+    var badge = document.querySelector(".blog-count-badge");
+    if (badge) {
+      if (normalized === "all") {
+        badge.innerHTML = count + " recordings";
+      } else {
+        badge.innerHTML = 'Showing <strong>' + count + '</strong> for tag <strong>"' + raw + '"</strong> &nbsp;&middot;&nbsp; <button id="clearVideosFilter" style="background:none; border:none; color:var(--ti-red, #CC0000); font-weight:700; cursor:pointer; text-decoration:underline; font-size:12px; padding:0;">Clear filter &times;</button>';
+        var clearBtn = document.getElementById("clearVideosFilter");
+        if (clearBtn) {
+          clearBtn.addEventListener("click", function() {
+            applyVideosFilter("all");
+          });
+        }
+      }
+    }
+  }
+
+  // Top filter buttons
+  document.querySelectorAll(".blog-filter-btn").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      applyVideosFilter(btn.getAttribute("data-filter"));
+    });
+  });
+
+  // Clickable kicker tags
+  document.querySelectorAll(".blog-kicker-tag").forEach(function(el) {
+    el.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var tag = el.getAttribute("data-tag") || el.textContent.trim();
+      applyVideosFilter(tag);
+      var gridSec = document.querySelector(".blog-grid-section");
+      if (gridSec) {
+        gridSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Check URL parameters on load
+  var urlParams = new URLSearchParams(window.location.search);
+  var initialTag = urlParams.get("tag");
+  if (initialTag) {
+    applyVideosFilter(initialTag, false);
+  }
+})();
+</script>

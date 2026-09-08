@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    {% if page.title %}
+      {{ page.title }} · Sitara Community Connect
+    {% else %}
+      Sitara Community Connect | Texas Instruments
+    {% endif %}
+  </title>
+
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <link rel="stylesheet" href="{{ '/assets/css/app-notes.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+</head>
+
+<body>
+
+  <!-- =========================================================
+       TI GLOBAL HEADER
+       ========================================================= -->
+  <header class="site-header">
+
+    <!-- Header Top Row (White Bar) -->
+    <div class="ti-header-top">
+      <div class="ti-header-top-inner">
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="ti-mobile-toggle" id="mobileMenuToggle" aria-label="Open navigation menu" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <!-- TI Brand -->
+        <a class="ti-brand-wrap" href="{{ '/' | relative_url }}" title="Texas Instruments - Sitara">
+          <img
+            src="{{ '/assets/images/ic-logo.svg' | relative_url }}"
+            alt="Texas Instruments"
+            class="ti-logo-img"
+          >
+          <span class="brand-divider">|</span>
+          <span class="brand-subtitle">SITARA Microprocessors &amp; DSPs</span>
+        </a>
+
+        <!-- Search Bar (Occupies right side) -->
+        <div class="ti-header-center">
+          <form class="ti-search-form" id="tiHeaderSearchForm" action="javascript:void(0);" method="get">
+            <div class="ti-search-input-wrap">
+              <input
+                type="text"
+                name="searchTerm"
+                id="tiHeaderSearchInput"
+                class="ti-search-input"
+                placeholder="Search blogs, talks, videos..."
+                aria-label="Search site content"
+                autocomplete="off"
+              >
+              <button type="submit" class="ti-search-btn" aria-label="Submit search">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="ti-search-results" id="tiSearchResults"></div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Header Navigation (TI Red Bar) -->
+    <div class="ti-nav-bar">
+      <div class="ti-nav-inner">
+
+        <nav class="ti-nav-links" id="tiNavLinks">
+          <div class="ti-nav-item">
+            <a href="{{ '/' | relative_url }}" class="ti-nav-link {% if page.url == '/' or page.url == '/index.html' %}active{% endif %}">
+              Home
+            </a>
+          </div>
+
+          <div class="ti-nav-item">
+            <a href="{{ '/blog/' | relative_url }}" class="ti-nav-link {% if page.url contains '/blog/' %}active{% endif %}">
+              Blogs
+            </a>
+          </div>
+
+          <div class="ti-nav-item">
+            <a href="{{ '/talks/' | relative_url }}" class="ti-nav-link {% if page.url contains '/talks/' %}active{% endif %}">
+              Talks
+            </a>
+          </div>
+
+          <div class="ti-nav-item">
+            <a href="{{ '/videos/' | relative_url }}" class="ti-nav-link {% if page.url contains '/videos/' %}active{% endif %}">
+              Videos
+            </a>
+          </div>
+
+          <div class="ti-nav-item">
+            <a href="{{ '/app-notes/' | relative_url }}" class="ti-nav-link {% if page.url contains '/app-notes/' %}active{% endif %}">
+              App Notes
+            </a>
+          </div>
+
+          <div class="ti-nav-item">
+            <a href="https://sitarasom.com/" target="_blank" rel="noopener noreferrer" class="ti-nav-link" title="Explore Sitara SOM Partners">
+              SOM Explorer ↗
+            </a>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+
+  </header>
+
+  <!-- =========================================================
+       MOBILE DRAWER & BACKDROP
+       ========================================================= -->
+  <div class="ti-drawer-backdrop" id="tiDrawerBackdrop"></div>
+  <nav class="ti-mobile-drawer" id="tiMobileDrawer" aria-label="Mobile navigation">
+    <div class="ti-drawer-header">
+      <span class="ti-drawer-title">
+        <img src="{{ '/assets/images/ic-logo.svg' | relative_url }}" alt="Texas Instruments" class="ti-drawer-logo-img">
+      </span>
+      <button class="ti-drawer-close" id="tiDrawerClose" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="ti-drawer-body">
+      <!-- Drawer Search Form -->
+      <div class="ti-drawer-search-section">
+        <form class="ti-drawer-search-form" action="javascript:void(0);" method="get">
+          <div class="ti-drawer-search-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="text"
+              class="ti-drawer-search-input"
+              placeholder="Search blogs, talks, videos..."
+              aria-label="Search site content"
+              autocomplete="off"
+            >
+          </div>
+          <div class="ti-drawer-search-results" id="tiDrawerSearchResults"></div>
+        </form>
+      </div>
+
+      <div class="ti-drawer-divider"></div>
+
+      <ul class="ti-drawer-links">
+        <li><a class="ti-drawer-link {% if page.url == '/' or page.url == '/index.html' %}active{% endif %}" href="{{ '/' | relative_url }}">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Home
+        </a></li>
+        <li><a class="ti-drawer-link {% if page.url contains '/blog/' %}active{% endif %}" href="{{ '/blog/' | relative_url }}">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Blogs
+        </a></li>
+        <li><a class="ti-drawer-link {% if page.url contains '/talks/' %}active{% endif %}" href="{{ '/talks/' | relative_url }}">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          Talks
+        </a></li>
+        <li><a class="ti-drawer-link {% if page.url contains '/videos/' %}active{% endif %}" href="{{ '/videos/' | relative_url }}">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Videos
+        </a></li>
+        <li><a class="ti-drawer-link {% if page.url contains '/app-notes/' %}active{% endif %}" href="{{ '/app-notes/' | relative_url }}">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          App Notes
+        </a></li>
+      </ul>
+      <div class="ti-drawer-divider"></div>
+      <span class="ti-drawer-section-title">External</span>
+      <ul class="ti-drawer-links secondary">
+        <li><a class="ti-drawer-link" href="https://sitarasom.com/" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          SOM Explorer
+        </a></li>
+        <li><a class="ti-drawer-link" href="https://e2e.ti.com/" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          TI E2E Forums
+        </a></li>
+    </div>
+  </nav>
+
+
+  <!-- =========================================================
+       PAGE CONTENT
+       ========================================================= -->
+  <main style="width: 100%; margin: 0; padding: 0; display: block;">
+    {{ content }}
+  </main>
+
+
+  <!-- =========================================================
+       TI COMPLETE FOOTER
+       ========================================================= -->
+  <footer class="ti-footer-wrapper">
+    <div class="ti-footer-container">
+
+      <!-- 4-Column Navigation Links -->
+      <div class="ti-footer-grid">
+
+        <!-- Column 1: About TI -->
+        <div class="ti-footer-col">
+          <div class="ti-footer-col-header" role="button" tabindex="0" aria-expanded="false">
+            <span>About TI</span>
+            <svg class="ti-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <ul class="ti-footer-links-list">
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/about-ti/company/overview.html" target="_blank" rel="noopener noreferrer">About TI overview</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://careers.ti.com/" target="_blank" rel="noopener noreferrer">Careers</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://news.ti.com/" target="_blank" rel="noopener noreferrer">Newsroom</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/about-ti/company/behind-the-chip.html" target="_blank" rel="noopener noreferrer">Our stories | Behind the Chip</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/about-ti/company/events.html" target="_blank" rel="noopener noreferrer">Events</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://investor.ti.com/" target="_blank" rel="noopener noreferrer">Investor relations</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/about-ti/company/manufacturing.html" target="_blank" rel="noopener noreferrer">Manufacturing</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/about-ti/corporate-citizenship.html" target="_blank" rel="noopener noreferrer">Corporate citizenship</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Quick links -->
+        <div class="ti-footer-col">
+          <div class="ti-footer-col-header" role="button" tabindex="0" aria-expanded="false">
+            <span>Quick links</span>
+            <svg class="ti-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <ul class="ti-footer-links-list">
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/contact-us" target="_blank" rel="noopener noreferrer">Contact us</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://e2e.ti.com/" target="_blank" rel="noopener noreferrer">TI E2E™ design support forums</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/cross-reference-search/" target="_blank" rel="noopener noreferrer">Cross-reference search</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://support.ti.com/" target="_blank" rel="noopener noreferrer">Customer support center</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/support-packaging/packaging-information.html" target="_blank" rel="noopener noreferrer">Packaging</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/quality-reliability-packaging-download/" target="_blank" rel="noopener noreferrer">Quality &amp; reliability</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/myti-faq" target="_blank" rel="noopener noreferrer">myTI account FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Buying -->
+        <div class="ti-footer-col">
+          <div class="ti-footer-col-header" role="button" tabindex="0" aria-expanded="false">
+            <span>Buying</span>
+            <svg class="ti-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <ul class="ti-footer-links-list">
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/api-suite/" target="_blank" rel="noopener noreferrer">TI API suites</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/myti-company-account/" target="_blank" rel="noopener noreferrer">myTI company accounts</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/ordering-resources/shipping-payment-taxes.html" target="_blank" rel="noopener noreferrer">Shipping, payment &amp; taxes</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/ordering-resources/faqs.html" target="_blank" rel="noopener noreferrer">Ordering FAQs</a></li>
+            <li class="ti-footer-link-item"><a class="ti-footer-link" href="https://www.ti.com/ordering-resources/distributors.html" target="_blank" rel="noopener noreferrer">Authorized distributors</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Connect with us -->
+        <div class="ti-footer-col social-col">
+          <div class="ti-footer-col-header">
+            <span>Connect with us</span>
+          </div>
+          <div class="ti-social-icons-grid">
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/txinstruments/" class="ti-social-btn" target="_blank" rel="noopener noreferrer" title="Texas Instruments Instagram" aria-label="Texas Instruments Instagram">
+              <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/texasinstruments" class="ti-social-btn" target="_blank" rel="noopener noreferrer" title="Texas Instruments Facebook" aria-label="Texas Instruments Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+
+            <!-- X / Twitter -->
+            <a href="https://twitter.com/txinstruments" class="ti-social-btn" target="_blank" rel="noopener noreferrer" title="Texas Instruments X" aria-label="Texas Instruments X">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/company/texas-instruments" class="ti-social-btn" target="_blank" rel="noopener noreferrer" title="Texas Instruments LinkedIn" aria-label="Texas Instruments LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.78a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z"/>
+              </svg>
+            </a>
+
+            <!-- TI E2E™ Design Support Forum -->
+            <a href="https://e2e.ti.com/" class="ti-social-btn" target="_blank" rel="noopener noreferrer" title="TI E2E Design Support Forum" aria-label="TI E2E Design Support Forum">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-8 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 10H6v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1z"/>
+              </svg>
+            </a>
+
+            <!-- YouTube -->
+            <a href="https://www.youtube.com/texasinstruments" class="ti-social-btn" target="_blank" rel="noopener noreferrer" title="Texas Instruments YouTube" aria-label="Texas Instruments YouTube">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lower Footer Section: Logo, Description, Legal Links, Copyright -->
+      <div class="ti-footer-lower">
+
+        <div class="ti-footer-brand-section">
+          <a href="https://www.ti.com/" class="ti-footer-logo-link" target="_blank" rel="noopener noreferrer">
+            <img
+              src="{{ '/assets/images/ti-logo-white.svg' | relative_url }}"
+              alt="Texas Instruments"
+              class="ti-footer-logo-img"
+            >
+          </a>
+          <p class="ti-footer-desc">
+            Texas Instruments has been making progress possible for decades. We are a global semiconductor company that designs, manufactures, tests and sells analog and embedded processing chips. Our products help our customers efficiently manage power, accurately sense and transmit data and provide the core control or processing in their designs.
+          </p>
+        </div>
+
+        <ul class="ti-legal-links-list">
+          <li><a class="ti-legal-link" href="https://www.ti.com/legal/accessibility.html" target="_blank" rel="noopener noreferrer">Accessibility</a></li>
+          <li><a class="ti-legal-link" href="https://www.ti.com/legal/cookie-policy.html" target="_blank" rel="noopener noreferrer">Cookie policy</a></li>
+          <li><a class="ti-legal-link" href="https://www.ti.com/legal/privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy policy</a></li>
+          <li><a class="ti-legal-link" href="https://www.ti.com/legal/terms-of-sale.html" target="_blank" rel="noopener noreferrer">Terms of sale</a></li>
+          <li><a class="ti-legal-link" href="https://www.ti.com/legal/terms-of-use.html" target="_blank" rel="noopener noreferrer">Terms of use</a></li>
+          <li><a class="ti-legal-link" href="https://www.ti.com/legal/trademarks.html" target="_blank" rel="noopener noreferrer">Trademarks</a></li>
+          <li><a class="ti-legal-link" href="https://www.ti.com/feedback" target="_blank" rel="noopener noreferrer">Website feedback</a></li>
+          <li><a class="ti-legal-link" href="https://www.ti.com/legal/imprint.html" target="_blank" rel="noopener noreferrer">Imprint</a></li>
+        </ul>
+
+        <p class="ti-footer-copyright">
+          © Copyright 1995-2026 Texas Instruments Incorporated. All rights reserved.
+        </p>
+
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
+
+</body>
+</html>

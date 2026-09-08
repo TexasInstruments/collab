@@ -1,0 +1,184 @@
+---
+layout: default
+---
+
+<article class="article-container">
+  
+  <div class="article-back-nav">
+    <a href="{{ '/blog/' | relative_url }}" class="article-back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Back to Engineering Blogs</span>
+    </a>
+  </div>
+
+  <header class="article-header">
+    <p class="article-kicker">
+      {{ page.categories | join: " · " }}
+    </p>
+
+    <h1>{{ page.title }}</h1>
+
+    {% if page.description %}
+    <p class="article-lead">
+      {{ page.description }}
+    </p>
+    {% endif %}
+
+    <div class="article-meta-bar">
+      <span class="article-meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <strong>{{ page.author | default: "Sitara MPU Software Team" }}</strong>
+      </span>
+
+      <span class="article-meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span>{{ page.date | date: "%B %d, %Y" }}</span>
+      </span>
+
+      {% if page.tags and page.tags.size > 0 %}
+      <span class="article-meta-item" style="gap: 6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+          <line x1="7" y1="7" x2="7.01" y2="7"></line>
+        </svg>
+        <span class="blog-tags-inline" style="display:inline-flex; gap:6px; flex-wrap:wrap;">
+          {% for tag in page.tags %}
+            {% assign tag_param = tag | url_encode %}
+            <a href="{{ '/blog/?tag=' | append: tag_param | relative_url }}" class="blog-tag">{{ tag }}</a>
+          {% endfor %}
+        </span>
+      </span>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="article-hero-image-wrap">
+    <img
+      src="{% if page.featured %}{{ page.image | default: '/assets/images/featured-default.png' | relative_url }}{% else %}{{ page.image | default: '/assets/images/blog-default.jpeg' | relative_url }}{% endif %}"
+      alt="{{ page.title }}"
+      class="article-hero-image"
+    >
+  </div>
+
+  <div class="prose" id="articleProse">
+    {{ content }}
+  </div>
+
+  <div class="article-bottom-actions">
+    <a href="{{ '/blog/' | relative_url }}" class="article-action-btn back-btn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Back to All Articles</span>
+    </a>
+
+    <a href="https://www.ti.com/processors/sitara-arm/overview.html" target="_blank" rel="noopener noreferrer" class="article-action-btn ti-cta-btn">
+      <span>Explore Sitara MPUs on TI.com</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
+      </svg>
+    </a>
+  </div>
+
+</article>
+
+<script>
+(function() {
+  // Find and enhance the "Related talk / Slides / Video" section in the blog post
+  var prose = document.getElementById("articleProse");
+  if (!prose) return;
+
+  var hr = prose.querySelector("hr:last-of-type");
+  if (!hr) return;
+
+  var nodesToTransform = [];
+  var current = hr.nextElementSibling;
+  var talkTitle = "";
+  var slidesUrl = "";
+  var videoUrl = "";
+
+  while (current) {
+    var text = current.textContent || "";
+    if (text.indexOf("Related talk:") !== -1) {
+      talkTitle = text.replace(/Related talk:\s*/i, "").trim();
+      nodesToTransform.push(current);
+    } else if (text.indexOf("Slides:") !== -1) {
+      var a = current.querySelector("a");
+      slidesUrl = a ? a.href : text.replace(/Slides:\s*/i, "").trim();
+      nodesToTransform.push(current);
+    } else if (text.indexOf("Video:") !== -1) {
+      var a = current.querySelector("a");
+      videoUrl = a ? a.href : text.replace(/Video:\s*/i, "").trim();
+      nodesToTransform.push(current);
+    }
+    current = current.nextElementSibling;
+  }
+
+  if (talkTitle || slidesUrl || videoUrl) {
+    // Hide original raw text nodes and hr
+    hr.style.display = "none";
+    nodesToTransform.forEach(function(node) {
+      node.style.display = "none";
+    });
+
+    // Create a beautiful, styled card
+    var card = document.createElement("div");
+    card.className = "blog-resources-card";
+
+    var cardHtml = '<div class="resources-header">' +
+      '<div class="resources-icon-badge">' +
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+          '<polyline points="14 2 14 8 20 8"></polyline>' +
+          '<line x1="16" y1="13" x2="8" y2="13"></line>' +
+          '<line x1="16" y1="17" x2="8" y2="17"></line>' +
+        '</svg>' +
+      '</div>' +
+      '<div>' +
+        '<span class="resources-kicker-label">Technical Resources &amp; Artifacts</span>' +
+        (talkTitle ? '<h4 class="resources-session-title">' + talkTitle + '</h4>' : '<h4 class="resources-session-title">Related Session &amp; Slides</h4>') +
+      '</div>' +
+    '</div>';
+
+    cardHtml += '<div class="resources-buttons-row">';
+    if (slidesUrl) {
+      cardHtml += '<a href="' + slidesUrl + '" target="_blank" rel="noopener noreferrer" class="blog-res-btn slides-btn" title="Download presentation slides (PDF)">' +
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+          '<polyline points="14 2 14 8 20 8"></polyline>' +
+          '<line x1="12" y1="18" x2="12" y2="12"></line>' +
+          '<line x1="9" y1="15" x2="15" y2="15"></line>' +
+        '</svg>' +
+        '<span>Download Slides (PDF)</span>' +
+      '</a>';
+    }
+    if (videoUrl) {
+      cardHtml += '<a href="' + videoUrl + '" target="_blank" rel="noopener noreferrer" class="blog-res-btn youtube-btn" title="Watch presentation video on YouTube">' +
+        '<svg width="18" height="13" viewBox="0 0 28 20" fill="none" aria-hidden="true">' +
+          '<rect width="28" height="20" rx="6" fill="#FFFFFF"/>' +
+          '<polygon points="11,5.5 19,10 11,14.5" fill="#FF0000"/>' +
+        '</svg>' +
+        '<span>Watch on YouTube</span>' +
+      '</a>';
+    }
+    cardHtml += '</div>';
+
+    card.innerHTML = cardHtml;
+    prose.appendChild(card);
+  }
+})();
+</script>

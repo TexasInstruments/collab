@@ -1,0 +1,56 @@
+---
+layout: null
+---
+[
+  {% for post in site.posts %}
+  {
+    "type": "blog",
+    "title": {{ post.title | jsonify }},
+    "url": "{{ post.url | relative_url }}",
+    "description": {{ post.description | default: "" | jsonify }},
+    "categories": {{ post.categories | jsonify }},
+    "tags": {{ post.tags | default: empty | jsonify }},
+    "author": {{ post.author | default: "Sitara Team" | jsonify }},
+    "date": "{{ post.date | date: '%b %d, %Y' }}"
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+  {% if site.posts.size > 0 and site.talks.size > 0 %},{% endif %}
+  {% for talk in site.talks %}
+  {
+    "type": "talk",
+    "title": {{ talk.title | jsonify }},
+    "url": "{{ talk.url | relative_url }}",
+    "description": {{ talk.description | default: "" | jsonify }},
+    "categories": [{{ talk.category | jsonify }}],
+    "tags": [],
+    "author": {{ talk.speaker | default: "Sitara Team" | jsonify }},
+    "date": "{{ talk.year }}"
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+  {% if site.talks.size > 0 and site.videos.size > 0 %},{% endif %}
+  {% for video in site.videos %}
+  {
+    "type": "video",
+    "title": {{ video.title | jsonify }},
+    "url": "{{ video.url | relative_url }}",
+    "description": {{ video.description | default: "" | jsonify }},
+    "categories": [{{ video.category | jsonify }}],
+    "tags": [],
+    "author": {{ video.speaker | default: "Sitara Team" | jsonify }},
+    "date": "{{ video.year }}"
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+  {% if site.videos.size > 0 and site.data.app_notes.size > 0 %},{% endif %}
+  {% for note in site.data.app_notes %}
+  {
+    "type": "appnote",
+    "title": {{ note.title | jsonify }},
+    "url": "{{ note.url }}",
+    "description": {{ note.description | default: "" | jsonify }},
+    "categories": [{{ note.family | jsonify }}, {{ note.category | jsonify }}],
+    "tags": [],
+    "author": "Texas Instruments",
+    "date": ""
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
