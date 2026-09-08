@@ -7,7 +7,7 @@ categories: [Linux, DSP, RPMsg, Heterogeneous Computing]
 tags: [RPMsg, DMA, C7x, AM62D, Audio]
 description: "A Linux-controlled architecture for real-time DSP workloads using RPMsg, shared DMA buffers and a zero-copy data model."
 featured: false
-image: /assets/images/blogs/blog-1.png
+image: https://texasinstruments.github.io/collab/assets/images/blogs/blog-1.png
 ---
 
 # Zero-Copy DSP Offload in Linux: Keeping Control in Linux and Compute on the DSP
