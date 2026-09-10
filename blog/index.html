@@ -62,7 +62,11 @@ title: Blogs
         </div>
 
         <h2 class="featured-blog-title">
+          {% if featured_post.external_url %}
+          <a href="{{ featured_post.external_url }}" target="_blank" rel="noopener noreferrer">
+          {% else %}
           <a href="{{ featured_post.url | relative_url }}">
+          {% endif %}
             {{ featured_post.title }}
           </a>
         </h2>
@@ -99,7 +103,7 @@ title: Blogs
           </span>
         </div>
 
-        <a href="{{ featured_post.url | relative_url }}" class="featured-blog-btn">
+        <a href="{% if featured_post.external_url %}{{ featured_post.external_url }}{% else %}{{ featured_post.url | relative_url }}{% endif %}" class="featured-blog-btn"{% if featured_post.external_url %} target="_blank" rel="noopener noreferrer"{% endif %}>
           <span>Read full article</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -128,7 +132,7 @@ title: Blogs
       <article class="blog-card" data-categories="{{ post.categories | join: ',' }}" data-tags="{{ post.tags | join: ',' }}" data-title="{{ post.title }}">
         
         <div class="blog-card-media">
-          <a href="{{ post.url | relative_url }}" tabindex="-1" aria-hidden="true">
+          <a href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url | relative_url }}{% endif %}" tabindex="-1" aria-hidden="true"{% if post.external_url %} target="_blank" rel="noopener noreferrer"{% endif %}>
             <img
               src="{{ post.image | default: '/assets/images/blog-default.jpeg' | relative_url }}"
               alt="{{ post.title }}"
@@ -146,7 +150,7 @@ title: Blogs
           </p>
 
           <h3 class="blog-card-title">
-            <a href="{{ post.url | relative_url }}">
+            <a href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url | relative_url }}{% endif %}"{% if post.external_url %} target="_blank" rel="noopener noreferrer"{% endif %}>
               {{ post.title }}
             </a>
           </h3>
@@ -169,7 +173,7 @@ title: Blogs
           </div>
 
           <div class="blog-card-footer">
-            <a href="{{ post.url | relative_url }}" class="blog-read-btn">
+            <a href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url | relative_url }}{% endif %}" class="blog-read-btn"{% if post.external_url %} target="_blank" rel="noopener noreferrer"{% endif %}>
               <span>Read article</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
