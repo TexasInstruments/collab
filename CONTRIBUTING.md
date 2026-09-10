@@ -180,3 +180,4 @@ Before submitting your pull request, verify the following items:
 - [ ] **Claims Verified**: Product capabilities and performance figures align with official Sitara collateral.
 - [ ] **Links & Embeds**: YouTube IDs, Brightcove video IDs, slide deck URLs, and external links resolve properly.
 - [ ] **Attribution**: Speaker and author credits are accurate.
+- [ ] **Chronological Order**: The `year` front matter is set correctly; the talks page sorts entries by `year` (newest first), so no manual reordering is needed.
