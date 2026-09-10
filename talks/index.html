@@ -46,7 +46,8 @@ title: Talks
     </div>
 
     <div class="talk-grid">
-      {% for talk in site.talks %}
+      {% assign sorted_talks = site.talks | sort: 'year' | reverse %}
+      {% for talk in sorted_talks %}
       <article class="talk-card" data-category="{{ talk.category }}" data-title="{{ talk.title }}" data-speaker="{{ talk.speaker }}" data-conference="{{ talk.conference }}">
         
         <div class="blog-card-media">
