@@ -6,7 +6,8 @@ date: 2026-09-10
 categories: [Linux, Industrial]
 tags: [CIP, Long-Term Support, Open Source, AM335x]
 description: "How Texas Instruments' industrial processor portfolio and the Civil Infrastructure Platform's long-term-support Linux base layer come together to support decades-long industrial deployments. Read the full piece on the CIP Project blog."
-featured: false
+featured: true
+image: /assets/images/blogs/blog_cip_ti.png
 external_url: "https://cip-project.org/blog/2026/06/25/accelerating-industrial-innovation-how-cip-complements-tis-industrial-processors"
 ---
 

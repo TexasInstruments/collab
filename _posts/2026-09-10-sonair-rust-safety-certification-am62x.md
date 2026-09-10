@@ -7,6 +7,7 @@ categories: [Rust, Functional Safety, AM62x]
 tags: [Rust, Ferrocene, IEC 61508, Bare Metal]
 description: "Sonair's ADAR One is the first safety-certified embedded system built in Rust, running on a Texas Instruments Sitara device. Read the full engineering write-up on Sonair's Journal."
 featured: false
+image: /assets/images/blogs/blog_sonair_safety.png
 external_url: "https://www.sonair.com/journal/how-we-safety-certified-the-worlds-first-rust-implementation"
 ---
 
