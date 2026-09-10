@@ -6,31 +6,31 @@
 
 :root {
   --ti-red: #CC0000;
-  --ti-red-dark: #A30000;
-  --ti-red-hover: #b30000;
+  --ti-red-hover: #EE0000;
+  --ti-red-dark: #A40000;
   --ti-red-light: #fff0f0;
-  
-  --ti-black: #111111;
+
+  --ti-black: #000000;
   --ti-charcoal: #222222;
   --ti-charcoal-dark: #1a1a1a;
   --ti-footer-bg: #0F0F0F;
   --ti-footer-border: #262626;
   --ti-footer-text: #cccccc;
-  
-  --ti-text-main: #222222;
+
+  --ti-text-main: #333333;
   --ti-text-muted: #555555;
   --ti-text-light: #767676;
-  
-  --ti-bg-gray: #f8f9fa;
+
+  --ti-bg-gray: #f7f7f7;
   --ti-bg-card: #ffffff;
-  --ti-border-light: #e0e0e0;
+  --ti-border-light: #e8e8e8;
   --ti-border-card: #e5e5e5;
-  
-  --ti-link-blue: #006272;
-  --ti-link-blue-hover: #00434e;
-  
+
+  --ti-link-blue: #007C8C;
+  --ti-link-blue-hover: #00525D;
+
   --ti-font: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  --ti-max-width: 1200px;
+  --ti-max-width: 1184px;
 }
 
 * {
@@ -476,7 +476,7 @@ body {
 }
 
 .ti-nav-link:hover {
-  background-color: var(--ti-red-dark);
+  background-color: var(--ti-red-hover);
 }
 
 .ti-nav-link.active {
@@ -496,7 +496,7 @@ body {
 }
 
 .ti-cart-btn:hover {
-  background-color: var(--ti-red-dark);
+  background-color: var(--ti-red-hover);
 }
 
 /* ==========================================================================
@@ -594,7 +594,7 @@ main {
 
 .ti-community-intro-title {
   font-size: clamp(26px, 3.8vw, 36px);
-  font-weight: 400;
+  font-weight: 300;
   color: var(--ti-text-main);
   margin: 0 0 16px;
   letter-spacing: -0.5px;
@@ -634,13 +634,13 @@ main {
   font-size: clamp(40px, 6.5vw, 68px);
   line-height: 1.04;
   margin: 0 0 22px;
-  font-weight: 900;
+  font-weight: 300;
   letter-spacing: -1.5px;
   color: var(--ti-black);
 }
 
 .hero h1 span {
-  font-weight: 400;
+  font-weight: 300;
   color: #444444;
 }
 
@@ -676,19 +676,31 @@ main {
 }
 
 .button:hover {
+  background: var(--ti-red-hover);
+  border-color: var(--ti-red-hover);
+}
+
+.button:active {
   background: var(--ti-red-dark);
   border-color: var(--ti-red-dark);
 }
 
 .button.secondary {
   background: #ffffff;
-  color: var(--ti-black);
-  border: 1px solid #767676;
+  color: var(--ti-red);
+  border: 1px solid var(--ti-red);
 }
 
 .button.secondary:hover {
-  background: #f5f5f5;
-  border-color: var(--ti-black);
+  background: var(--ti-red-hover);
+  color: #ffffff;
+  border-color: var(--ti-red-hover);
+}
+
+.button.secondary:active {
+  background: var(--ti-red-dark);
+  color: #ffffff;
+  border-color: var(--ti-red-dark);
 }
 
 /* Content Sections & Grids */
@@ -712,7 +724,7 @@ main > .section:first-of-type {
 .section-head h2 {
   margin: 0;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 300;
   letter-spacing: -0.5px;
 }
 
@@ -756,7 +768,7 @@ main > .section:first-of-type {
   font-size: 21px;
   line-height: 1.3;
   margin: 8px 0 12px;
-  font-weight: 700;
+  font-weight: 300;
 }
 
 .card h3 a, .feature-card h3 a, .list-card h2 a {
@@ -849,7 +861,7 @@ main > .section:first-of-type {
 .ti-page-hero-title {
   font-size: clamp(36px, 5.5vw, 56px);
   line-height: 1.1;
-  font-weight: 700;
+  font-weight: 300;
   color: #ffffff;
   margin: 0 0 16px;
   letter-spacing: -0.5px;
@@ -957,7 +969,7 @@ main > .section:first-of-type {
 .featured-blog-title {
   font-size: clamp(22px, 2.5vw, 30px);
   line-height: 1.25;
-  font-weight: 800;
+  font-weight: 300;
   margin: 0 0 14px;
   letter-spacing: -0.5px;
 }
@@ -1017,7 +1029,7 @@ main > .section:first-of-type {
 }
 
 .featured-blog-btn:hover {
-  background: var(--ti-red-dark);
+  background: var(--ti-red-hover);
   color: #ffffff;
   text-decoration: none;
 }
@@ -1041,7 +1053,7 @@ main > .section:first-of-type {
 
 .blog-section-title {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 300;
   color: var(--ti-black);
   margin: 0;
   display: flex;
@@ -1123,7 +1135,7 @@ main > .section:first-of-type {
 .blog-card-title {
   font-size: 18.5px;
   line-height: 1.35;
-  font-weight: 700;
+  font-weight: 600;
   margin: 0 0 10px;
 }
 
@@ -1195,7 +1207,7 @@ main > .section:first-of-type {
 }
 
 .blog-read-btn:hover {
-  background: var(--ti-red-dark);
+  background: var(--ti-red-hover);
   color: #ffffff !important;
   text-decoration: none !important;
   transform: translateY(-1px);
@@ -1258,7 +1270,7 @@ main > .section:first-of-type {
 }
 
 .blog-kicker-tag:hover {
-  color: var(--ti-red-dark, #A30000);
+  color: var(--ti-red-dark, #A40000);
   text-decoration: underline;
 }
 
@@ -1468,7 +1480,7 @@ main > .section:first-of-type {
   left: 0;
   right: 0;
   background: #ffffff;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e8e8e8;
   border-top: none;
   border-radius: 0 0 6px 6px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -1499,7 +1511,7 @@ main > .section:first-of-type {
 
 .ti-search-result-item:hover,
 .ti-search-result-item.is-active {
-  background: #f8f9fa;
+  background: #f7f7f7;
 }
 
 .ti-search-result-type {
@@ -1530,8 +1542,8 @@ main > .section:first-of-type {
 }
 
 .ti-search-result-type.type-appnote {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: #EAFBEC;
+  color: #1A6724;
 }
 
 .ti-search-result-body {
@@ -1614,7 +1626,7 @@ main > .section:first-of-type {
   font-size: clamp(30px, 4.5vw, 46px);
   line-height: 1.15;
   letter-spacing: -0.8px;
-  font-weight: 800;
+  font-weight: 300;
   color: var(--ti-black);
   margin: 0 0 16px;
 }
@@ -1675,7 +1687,7 @@ main > .section:first-of-type {
 
 .prose h1 {
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 300;
   line-height: 1.2;
   letter-spacing: -0.5px;
   color: var(--ti-black);
@@ -1686,7 +1698,7 @@ main > .section:first-of-type {
 
 .prose h2 {
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 300;
   line-height: 1.25;
   letter-spacing: -0.4px;
   color: var(--ti-black);
@@ -1697,7 +1709,7 @@ main > .section:first-of-type {
 
 .prose h3 {
   font-size: 21px;
-  font-weight: 700;
+  font-weight: 300;
   line-height: 1.3;
   color: var(--ti-charcoal);
   margin: 32px 0 12px;
@@ -1705,7 +1717,7 @@ main > .section:first-of-type {
 
 .prose h4 {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 300;
   color: var(--ti-charcoal);
   margin: 24px 0 8px;
 }
@@ -1749,7 +1761,7 @@ a.ti-link:hover {
 .prose blockquote {
   margin: 28px 0;
   padding: 16px 24px;
-  background: #f8f9fa;
+  background: #f7f7f7;
   border-left: 4px solid var(--ti-red);
   border-radius: 0 4px 4px 0;
   font-style: italic;
@@ -1865,7 +1877,7 @@ a.ti-link:hover {
 
 .resources-session-title {
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ti-black, #111111);
   margin: 0;
   line-height: 1.35;
@@ -1963,8 +1975,8 @@ a.ti-link:hover {
 }
 
 .article-action-btn.ti-cta-btn:hover {
-  background: var(--ti-red-dark, #A30000);
-  border-color: var(--ti-red-dark, #A30000);
+  background: var(--ti-red-hover, #EE0000);
+  border-color: var(--ti-red-hover, #EE0000);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(204, 0, 0, 0.25);
   text-decoration: none;
@@ -2045,7 +2057,7 @@ a.ti-link:hover {
   line-height: 1.1;
   letter-spacing: -1px;
   margin: 0 0 16px;
-  font-weight: 800;
+  font-weight: 300;
 }
 
 .community-intro {
@@ -2120,7 +2132,7 @@ a.ti-link:hover {
   line-height: 1.1;
   letter-spacing: -1px;
   margin: 0 0 16px;
-  font-weight: 800;
+  font-weight: 300;
 }
 
 .som-intro {
@@ -2534,7 +2546,7 @@ a.ti-link:hover {
     align-items: center;
     gap: 10px;
     background: #f5f5f5;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e8e8e8;
     border-radius: 6px;
     padding: 10px 14px;
     transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
@@ -2573,7 +2585,7 @@ a.ti-link:hover {
   .ti-drawer-search-results {
     display: none;
     background: #ffffff;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e8e8e8;
     border-radius: 6px;
     margin-top: 8px;
     max-height: 280px;

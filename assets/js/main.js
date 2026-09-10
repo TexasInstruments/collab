@@ -62,21 +62,32 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- 2. Mobile Footer Accordions ---
   const footerHeaders = document.querySelectorAll('.ti-footer-col-header');
 
+  function toggleFooterAccordion(header) {
+    if (window.innerWidth <= 768) {
+      const parentCol = header.closest('.ti-footer-col');
+      if (!parentCol) return;
+
+      const isOpen = parentCol.classList.contains('is-open');
+
+      if (isOpen) {
+        parentCol.classList.remove('is-open');
+        header.setAttribute('aria-expanded', 'false');
+      } else {
+        parentCol.classList.add('is-open');
+        header.setAttribute('aria-expanded', 'true');
+      }
+    }
+  }
+
   footerHeaders.forEach(function(header) {
     header.addEventListener('click', function() {
-      if (window.innerWidth <= 768) {
-        const parentCol = header.closest('.ti-footer-col');
-        if (!parentCol) return;
-        
-        const isOpen = parentCol.classList.contains('is-open');
+      toggleFooterAccordion(header);
+    });
 
-        if (isOpen) {
-          parentCol.classList.remove('is-open');
-          header.setAttribute('aria-expanded', 'false');
-        } else {
-          parentCol.classList.add('is-open');
-          header.setAttribute('aria-expanded', 'true');
-        }
+    header.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleFooterAccordion(header);
       }
     });
   });
