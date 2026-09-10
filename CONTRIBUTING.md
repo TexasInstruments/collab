@@ -21,7 +21,7 @@ To ensure consistent visuals, crisp rendering on high-DPI displays, and optimal 
 
 | Content Type | Recommended Dimensions | Aspect Ratio | Storage Directory | Front Matter Key | Fallback / Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **All Blogs (Featured, Grid & Post Pages)** | **1467 × 1072 px** | **1467 : 1072** (~1.37:1 / 4:3) | `assets/images/blogs/` | `image: /assets/images/blogs/<name>.png` | Standardized across featured hero, 3-column blog grid, and individual blog post headers. Falls back to `featured-default.png`. Set `featured: true` to highlight on homepage. |
+| **All Blogs (Featured, Grid & Post Pages)** | **1467 × 1072 px** | **1467 : 1072** (~1.37:1 / 4:3) | `assets/images/blogs/` | `image: /assets/images/blogs/<name>.png` | Standardized across featured hero, 3-column blog grid, and individual blog post headers. Falls back to `featured-default.png`. Set `featured: true` to highlight on homepage. Supports optional `external_url` to link the card out to a third-party article instead of hosting it locally. |
 | **In-Article Diagrams / Plots** | Width: **1200 – 1920 px** *(Height flexible)* | Flexible | `assets/images/blogs/` | Embedded in body Markdown | Use crisp PNG or SVG for block diagrams, schematics, waveforms, and architecture charts. |
 | **Conference Talks** | **1280 × 720 px** or YouTube HQ | **16:9** | YouTube CDN or `assets/images/talks/` | `image: "https://img.youtube.com/vi/<ID>/hqdefault.jpg"` | Standard presentation slide / title cover. Automatically displays YouTube thumbnail or local custom image. |
 | **Technical Videos** | **1280 × 720 px** or TI/Brightcove CDN | **16:9** | `assets/images/videos/` or CDN | `image: /assets/images/videos/<name>.png` | Clean 16:9 video preview without play overlays. Supports `external_url`, `source: "TI.com"`, and `video_embed`. |
@@ -58,9 +58,11 @@ To ensure consistent visuals, crisp rendering on high-DPI displays, and optimal 
    description: "A practical look at power optimization techniques on AM62x."
    featured: false # Set to true to highlight as Featured Blog on the homepage and blog page
    image: /assets/images/blogs/your-blog-image.png
+   external_url: "https://example.com/original-article" # Optional: link out to a third-party/external article instead of hosting it on this site
    ---
    ```
 5. **Write Article in Markdown**: Include code blocks, diagrams, and section headings.
+   - **Linking to an external/third-party article**: If you're featuring an article that already lives elsewhere (e.g. a partner or third-party engineering blog) and don't want to duplicate its content here, set `external_url` in the front matter to that article's URL. On the `/blog/` listing page, the featured card and grid card's thumbnail, title, and "Read article"/"Read full article" button will all link directly to `external_url` and open it in a new tab instead of this site's own post page. Keep the Markdown body to a short one-line note (e.g. "This article was originally published on the XYZ engineering blog. Read the full article at the link above.") for the rare case someone navigates directly to the internal post URL — do not reproduce the external article's content here. If `external_url` is omitted, the card links to the post's own internal page as before.
 6. **Submit Pull Request**: Open a PR against `main`.
 
 ---
@@ -178,6 +180,6 @@ Before submitting your pull request, verify the following items:
 - [ ] **Technical Review**: Architecture details, register names, and commands are accurate.
 - [ ] **No Confidential Information**: Content contains only public, non-restricted material.
 - [ ] **Claims Verified**: Product capabilities and performance figures align with official Sitara collateral.
-- [ ] **Links & Embeds**: YouTube IDs, Brightcove video IDs, slide deck URLs, and external links resolve properly.
+- [ ] **Links & Embeds**: YouTube IDs, Brightcove video IDs, slide deck URLs, and external links (including blog and video `external_url` values) resolve properly and open correctly in a new tab.
 - [ ] **Attribution**: Speaker and author credits are accurate.
 - [ ] **Chronological Order**: The `year` front matter is set correctly; the talks page sorts entries by `year` (newest first), so no manual reordering is needed.
